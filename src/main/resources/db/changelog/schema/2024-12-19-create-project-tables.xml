@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="2024-12-19_01-create_project_table" author="iapaschenko">
+        <createTable tableName="project" remarks="Проект">
+            <column name="id"                  type="UUID"         remarks="Идентификатор проекта"/>
+            <column name="name"                type="TEXT"         remarks="Название проекта"/>
+            <column name="code"                type="TEXT"         remarks="Шифр проекта"/>
+            <column name="start_date"          type="TIMESTAMP"    remarks="Дата старта проекта"/>
+            <column name="end_date"            type="TIMESTAMP"    remarks="Дата окончания проекта"/>
+            <column name="author_id"           type="UUID"         remarks="Идентификатор автора"/>
+            <column name="created_at"          type="TIMESTAMP"    remarks="Дата создания записи о проекте"/>
+            <column name="updated_at"          type="TIMESTAMP"    remarks="Дата обновления записи о проекте"/>
+            <column name="editor_id"           type="UUID"         remarks="Идентификатор пользователя обновившего данные о проекте"/>
+            <column name="status"              type="TEXT"         remarks="Статус проекте"/>
+        </createTable>
+
+        <addPrimaryKey tableName="project" columnNames="id"/>
+        <addForeignKeyConstraint baseTableName="project" baseColumnNames="author_id"
+                                 constraintName="fk_project_to_users_author"
+                                 referencedTableName="users" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="project" baseColumnNames="editor_id"
+                                 constraintName="fk_project_to_users_editor"
+                                 referencedTableName="users" referencedColumnNames="id"/>
+
+        <addNotNullConstraint tableName="project" columnName="name"/>
+        <addNotNullConstraint tableName="project" columnName="code"/>
+        <addNotNullConstraint tableName="project" columnName="start_date"/>
+        <addNotNullConstraint tableName="project" columnName="end_date"/>
+        <addNotNullConstraint tableName="project" columnName="author_id"/>
+        <addNotNullConstraint tableName="project" columnName="created_at"/>
+        <addNotNullConstraint tableName="project" columnName="status"/>
+    </changeSet>
+
+    <changeSet id="2024-12-19_02-create_section_table" author="iapaschenko">
+        <createTable tableName="section" remarks="Проект">
+            <column name="id"                  type="UUID"         remarks="Идентификатор раздела"/>
+            <column name="name"                type="TEXT"         remarks="Название раздела"/>
+            <column name="created_at"          type="TIMESTAMP"    remarks="Дата создания раздела"/>
+        </createTable>
+
+        <addPrimaryKey tableName="section" columnNames="id"/>
+
+        <addNotNullConstraint tableName="section" columnName="name"/>
+        <addNotNullConstraint tableName="section" columnName="created_at"/>
+    </changeSet>
+
+    <changeSet id="2024-12-19_03-create_project_section_table" author="iapaschenko">
+        <createTable tableName="project_section" remarks="Отношение разделов к проектам">
+            <column name="project_id"          type="UUID"         remarks="Идентификатор проекта"/>
+            <column name="section_id"          type="UUID"         remarks="Идентификатор раздела"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="project_section" baseColumnNames="project_id"
+                                 constraintName="fk_project_section_to_project"
+                                 referencedTableName="project" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="project_section" baseColumnNames="section_id"
+                                 constraintName="fk_project_section_to_section"
+                                 referencedTableName="section" referencedColumnNames="id"/>
+
+        <addUniqueConstraint tableName="project_section"
+                             columnNames="project_id, section_id"
+                             constraintName="unique_project_section"/>
+    </changeSet>
+
+</databaseChangeLog>
