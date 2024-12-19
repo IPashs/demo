@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="2024-12-19_01-create_user_tables" author="iapaschenko">
+        <createTable tableName="users" remarks="Пользователи">
+            <column name="id"                  type="UUID"         remarks="Идентификатор пользователя"/>
+            <column name="name"                type="TEXT"         remarks="Имя пользователя"/>
+            <column name="password"            type="TEXT"         remarks="Кодированный пароль пользователя"/>
+            <column name="email"               type="TEXT"         remarks="Электронная почта пользователя"/>
+            <column name="role"                type="TEXT"         remarks="Роль пользователя"/>
+            <column name="registered_at"       type="TIMESTAMP"    remarks="Дата регистрации пользователя"/>
+        </createTable>
+
+        <addPrimaryKey tableName="users" columnNames="id"/>
+
+        <addNotNullConstraint tableName="users" columnName="name"/>
+        <addNotNullConstraint tableName="users" columnName="password"/>
+        <addNotNullConstraint tableName="users" columnName="email"/>
+        <addNotNullConstraint tableName="users" columnName="role"/>
+        <addNotNullConstraint tableName="users" columnName="registered_at"/>
+    </changeSet>
+
+</databaseChangeLog>
