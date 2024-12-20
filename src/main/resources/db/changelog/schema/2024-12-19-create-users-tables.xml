@@ -24,4 +24,10 @@
         <addNotNullConstraint tableName="users" columnName="registered_at"/>
     </changeSet>
 
+    <changeSet id="2024-12-20_02-modify_user_tables" author="iapaschenko">
+        <addUniqueConstraint tableName="users"
+                             columnNames="email"
+                             constraintName="unique_email"/>
+    </changeSet>
+
 </databaseChangeLog>

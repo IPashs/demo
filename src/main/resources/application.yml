@@ -24,3 +24,6 @@ spring:
           order_inserts: true
           order_updates: true
     open-in-view: false
+jwt:
+  secret: ${JWT_SECRET}
+  refreshExpiration: ${REFRESH_EXPIRATION}
