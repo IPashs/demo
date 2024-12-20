@@ -1,0 +1,33 @@
+package ru.task.demo.controller;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import ru.task.demo.service.AuthService;
+import ru.task.demo.service.dto.CreateUserDto;
+import ru.task.demo.service.dto.LoginRequest;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping
+public class AuthController {
+    private final AuthService authService;
+
+    @PostMapping("/auth")
+    public ResponseEntity<Object> loginUsernamePassword(
+        @RequestBody @Valid LoginRequest loginRequest) {
+        return ResponseEntity.ok(authService.getAuthToken(loginRequest));
+    }
+
+    @PostMapping("/reg")
+    public ResponseEntity<Object> registration(
+        @RequestBody @Valid CreateUserDto createUserDto) {
+        return new ResponseEntity<>(authService.createUser(createUserDto), HttpStatus.CREATED);
+    }
+
+}

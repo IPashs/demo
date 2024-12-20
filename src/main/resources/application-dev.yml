@@ -9,3 +9,6 @@ spring:
   jpa:
     showSql: true
     open-in-view: true
+jwt:
+  secret: ${JWT_SECRET:?BFKv?b7PkFEyv%Y~RXgFc@MqQq0xroJ}
+  refreshExpiration: ${REFRESH_EXPIRATION:30m}
