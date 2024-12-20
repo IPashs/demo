@@ -2,15 +2,17 @@ package ru.task.demo.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.task.demo.entity.User;
-import ru.task.demo.repositories.UserComponent;
+import ru.task.demo.repositories.user.UserComponent;
 import ru.task.demo.service.UserService;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -29,5 +31,14 @@ public class UserServiceImpl implements UserService {
         );
     }
 
+    @Override
+    public User getCurrentUser() throws UsernameNotFoundException {
+        return userComponent.findByEmailOrDie(
+            SecurityContextHolder.getContext().getAuthentication().getName());
+    }
 
+    @Override
+    public User getUserByEmail(final String email) throws UsernameNotFoundException {
+        return userComponent.findByEmailOrDie(email);
+    }
 }

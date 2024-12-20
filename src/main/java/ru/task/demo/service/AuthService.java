@@ -1,8 +1,8 @@
 package ru.task.demo.service;
 
-import ru.task.demo.service.dto.CreateUserDto;
-import ru.task.demo.service.dto.LoginRequest;
-import ru.task.demo.service.dto.LoginResponse;
+import ru.task.demo.service.dto.auth.CreateUserDto;
+import ru.task.demo.service.dto.auth.LoginRequest;
+import ru.task.demo.service.dto.auth.LoginResponse;
 
 /**
  * Сервис авторизации

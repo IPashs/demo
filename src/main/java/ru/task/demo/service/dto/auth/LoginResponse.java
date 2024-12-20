@@ -1,4 +1,4 @@
-package ru.task.demo.service.dto;
+package ru.task.demo.service.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

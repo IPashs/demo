@@ -11,12 +11,12 @@ import ru.task.demo.config.PasswordEncoderConfiguration;
 import ru.task.demo.entity.User;
 import ru.task.demo.exception.AuthException;
 import ru.task.demo.exception.RequestException;
-import ru.task.demo.repositories.UserComponent;
+import ru.task.demo.repositories.user.UserComponent;
 import ru.task.demo.service.AuthService;
 import ru.task.demo.service.UserService;
-import ru.task.demo.service.dto.CreateUserDto;
-import ru.task.demo.service.dto.LoginRequest;
-import ru.task.demo.service.dto.LoginResponse;
+import ru.task.demo.service.dto.auth.CreateUserDto;
+import ru.task.demo.service.dto.auth.LoginRequest;
+import ru.task.demo.service.dto.auth.LoginResponse;
 import ru.task.demo.util.JwtUtil;
 import ru.task.demo.util.Role;
 

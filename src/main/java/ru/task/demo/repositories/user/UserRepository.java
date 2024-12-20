@@ -1,4 +1,4 @@
-package ru.task.demo.repositories.repository;
+package ru.task.demo.repositories.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,6 +11,6 @@ import java.util.UUID;
  * Репозиторий для работы с пользователем
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
+interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findByEmail(String email);
 }
