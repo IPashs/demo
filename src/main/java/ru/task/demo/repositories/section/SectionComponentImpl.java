@@ -1,6 +1,8 @@
 package ru.task.demo.repositories.section;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import ru.task.demo.entity.Section;
 import ru.task.demo.exception.NoSuchElementException;
@@ -24,5 +26,22 @@ public class SectionComponentImpl implements SectionComponent {
             throw new NoSuchElementException("ни один раздел не найден");
         }
         return sections;
+    }
+
+    @Override
+    public Page<Section> getAllSections(final PageRequest pageRequest) {
+        return sectionRepository.findAll(pageRequest);
+    }
+
+    @Override
+    public Section save(final Section section) {
+        return sectionRepository.save(section);
+    }
+
+    @Override
+    public void deleteOrDie(final UUID sectionId) {
+       Section section = sectionRepository.findById(sectionId)
+           .orElseThrow(()-> new NoSuchElementException("Раздел не найден"));
+       sectionRepository.delete(section);
     }
 }

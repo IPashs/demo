@@ -24,9 +24,10 @@ public class ProjectController {
      * @param createProjectRequest дто для создания проекта
      * @return дто с id и названием проекта
      */
-    @PostMapping("/project")
+    @PostMapping("/projects")
     public ResponseEntity<Object> loginUsernamePassword(
         @RequestBody @Valid CreateProjectRequest createProjectRequest) {
         return ResponseEntity.ok(projectService.createProject(createProjectRequest));
     }
+
 }
