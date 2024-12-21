@@ -2,9 +2,10 @@ package ru.task.demo.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import ru.task.demo.service.dto.SimpleIdNameDto;
 import ru.task.demo.service.dto.project.CreateProjectRequest;
-import ru.task.demo.service.dto.project.CreateProjectResponse;
 import ru.task.demo.service.dto.project.GetProjectResponse;
+import ru.task.demo.service.dto.project.ModifyProjectRequest;
 
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ public interface ProjectService {
      * @param request дто для создания проекта
      * @return дто с id и названием проекта
      */
-    CreateProjectResponse createProject(CreateProjectRequest request);
+    SimpleIdNameDto createProject(CreateProjectRequest request);
 
     /**
      * Получить страницу со всеми проектами
@@ -32,4 +33,12 @@ public interface ProjectService {
      * @return дто с данными проекта
      */
     GetProjectResponse getProject(UUID projectId);
+
+    /**
+     * Редактировать проект
+     * @param projectId идентификатор проекта
+     * @param modifyProjectRequest дто с новыми данными для проекта
+     * @return дто с id и названием проекта
+     */
+    SimpleIdNameDto modifyProject(UUID projectId, ModifyProjectRequest modifyProjectRequest);
 }

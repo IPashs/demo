@@ -14,5 +14,5 @@ import java.util.UUID;
 @Repository
 interface ProjectRepository extends JpaRepository<Project, UUID> {
     @EntityGraph(attributePaths = {"sections", "author"})
-    Optional<Project> findById(UUID projectId);
+    Optional<Project> findWithDetailsById(UUID projectId);
 }

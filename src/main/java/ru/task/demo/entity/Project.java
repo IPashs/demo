@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.task.demo.util.ProjectStatus;
 
 import java.time.LocalDateTime;
@@ -29,6 +30,7 @@ import java.util.UUID;
  * Сущность проекта
  */
 @Getter
+@Setter
 @Builder
 @Entity
 @Table(name = "project")

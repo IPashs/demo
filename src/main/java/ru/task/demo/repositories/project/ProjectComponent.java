@@ -29,4 +29,11 @@ public interface ProjectComponent {
      * @return проект
      */
     Project getProjectWithSectionAndAuthorOrDie(UUID projectId);
+
+    /**
+     * Получить проект если существует иначе ошибка
+     * @param projectId идентификатор проекта
+     * @return проект
+     */
+    Project getProjectOrDie(UUID projectId);
 }

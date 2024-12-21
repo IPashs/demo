@@ -26,6 +26,12 @@ public class ProjectComponentImpl implements ProjectComponent {
 
     @Override
     public Project getProjectWithSectionAndAuthorOrDie(final UUID projectId) {
+        return projectRepository.findWithDetailsById(projectId)
+            .orElseThrow(() -> new NoSuchElementException("Проект не найден"));
+    }
+
+    @Override
+    public Project getProjectOrDie(final UUID projectId) {
         return projectRepository.findById(projectId)
             .orElseThrow(() -> new NoSuchElementException("Проект не найден"));
     }
