@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import ru.task.demo.entity.Project;
 import ru.task.demo.exception.NoSuchElementException;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -34,5 +35,10 @@ public class ProjectComponentImpl implements ProjectComponent {
     public Project getProjectOrDie(final UUID projectId) {
         return projectRepository.findById(projectId)
             .orElseThrow(() -> new NoSuchElementException("Проект не найден"));
+    }
+
+    @Override
+    public Optional<UUID> getAnyProjectWithSection(final UUID sectionId) {
+        return projectRepository.findAnyBySectionId(sectionId);
     }
 }

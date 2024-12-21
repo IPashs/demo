@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import ru.task.demo.entity.Project;
 
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -36,4 +37,11 @@ public interface ProjectComponent {
      * @return проект
      */
     Project getProjectOrDie(UUID projectId);
+
+    /**
+     * Получить любой проект с разделом
+     * @param sectionId идентификатор раздела
+     * @return id проекта
+     */
+    Optional<UUID> getAnyProjectWithSection(UUID sectionId);
 }
