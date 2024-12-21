@@ -5,14 +5,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.task.demo.entity.Project;
+import ru.task.demo.exception.RequestException;
 import ru.task.demo.repositories.project.ProjectComponent;
 import ru.task.demo.repositories.section.SectionComponent;
 import ru.task.demo.service.ProjectService;
 import ru.task.demo.service.UserService;
 import ru.task.demo.service.dto.SimpleIdNameDto;
 import ru.task.demo.service.dto.project.CreateProjectRequest;
-import ru.task.demo.service.dto.project.CreateProjectResponse;
 import ru.task.demo.service.dto.project.GetProjectResponse;
+import ru.task.demo.service.dto.project.ModifyProjectRequest;
 import ru.task.demo.util.ProjectStatus;
 
 import java.time.LocalDateTime;
@@ -26,23 +27,23 @@ public class ProjectServiceImpl implements ProjectService {
     private final SectionComponent sectionComponent;
 
     @Override
-    public CreateProjectResponse createProject(final CreateProjectRequest request) {
-        Project savedProject = this.projectComponent.save(
-            Project.builder()
-                .code(request.getCode())
-                .name(request.getName())
-                .startDate(request.getStartDate())
-                .endDate(request.getEndDate())
-                .author(userService.getUserByEmail(request.getAuthorEmail()))
-                .createdAt(LocalDateTime.now())
-                .editor(userService.getCurrentUser())
-                .status(ProjectStatus.NEW)
-                .sections(sectionComponent.getSectionsOrDie(request.getSections()))
-                .build());
+    public SimpleIdNameDto createProject(final CreateProjectRequest request) {
+        Project savedProject = this.projectComponent.save(this.buildProject(request));
 
-        return CreateProjectResponse.builder()
-            .projectName(savedProject.getName())
-            .projectId(savedProject.getId())
+        return new SimpleIdNameDto(savedProject.getId(), savedProject.getName());
+    }
+
+    private Project buildProject(final CreateProjectRequest request) {
+        return Project.builder()
+            .code(request.getCode())
+            .name(request.getName())
+            .startDate(request.getStartDate())
+            .endDate(request.getEndDate())
+            .createdAt(LocalDateTime.now())
+            .author(userService.getUserByEmail(request.getAuthorEmail()))
+            .editor(userService.getCurrentUser())
+            .status(ProjectStatus.NEW)
+            .sections(sectionComponent.getSectionsOrDie(request.getSections()))
             .build();
     }
 
@@ -67,5 +68,25 @@ public class ProjectServiceImpl implements ProjectService {
                 .map(e -> new SimpleIdNameDto(e.getId(), e.getName()))
                 .toList())
             .build();
+    }
+
+    @Override
+    public SimpleIdNameDto modifyProject(final UUID projectId, final ModifyProjectRequest modifyProjectRequest) {
+        Project project = this.projectComponent.getProjectOrDie(projectId);
+        if (ProjectStatus.DELETED.equals(modifyProjectRequest.getStatus())) {
+            throw new RequestException("для удаления проекта следует использовать соответствующий метод");
+        }
+        //не очень красивое решение без использования mupstruct или другого маппера*
+        project.setUpdatedAt(LocalDateTime.now());
+        project.setCode(modifyProjectRequest.getCode());
+        project.setName(modifyProjectRequest.getName());
+        project.setStartDate(modifyProjectRequest.getStartDate());
+        project.setEndDate(modifyProjectRequest.getEndDate());
+        project.setAuthor(userService.getUserByEmail(modifyProjectRequest.getAuthorEmail()));
+        project.setEditor(userService.getCurrentUser());
+        project.setStatus(modifyProjectRequest.getStatus());
+        project.setSections(sectionComponent.getSectionsOrDie(modifyProjectRequest.getSections()));
+        Project savedProject = projectComponent.save(project);
+        return new SimpleIdNameDto(savedProject.getId(), savedProject.getName());
     }
 }
