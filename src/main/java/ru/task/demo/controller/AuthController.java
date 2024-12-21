@@ -21,22 +21,12 @@ import ru.task.demo.service.dto.auth.LoginRequest;
 public class AuthController {
     private final AuthService authService;
 
-    /**
-     * Метод авторизации пользователя
-     * @param loginRequest дто для авторизации
-     * @return дто с токеном доступа
-     */
     @PostMapping("/auth")
     public ResponseEntity<Object> loginUsernamePassword(
         @RequestBody @Valid LoginRequest loginRequest) {
         return ResponseEntity.ok(authService.getAuthToken(loginRequest));
     }
 
-    /**
-     * Метод для регистрации пользователя
-     * @param createUserDto дто для регистрации
-     * @return дто с токеном доступа
-     */
     @PostMapping("/reg")
     public ResponseEntity<Object> registration(
         @RequestBody @Valid CreateUserDto createUserDto) {

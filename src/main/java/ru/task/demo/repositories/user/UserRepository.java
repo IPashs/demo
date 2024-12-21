@@ -12,5 +12,10 @@ import java.util.UUID;
  */
 @Repository
 interface UserRepository extends JpaRepository<User, UUID> {
+    /**
+     * Получить пользователя по электронной почте
+     * @param email электронная почта
+     * @return пользователь
+     */
     Optional<User> findByEmail(String email);
 }

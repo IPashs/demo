@@ -15,11 +15,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class CreateUserDto {
+    /**
+     * Электронная почта
+     */
     @NotBlank
     @Email
     private String email;
+    /**
+     * Имя пользователя (ФИО)
+     */
     @NotBlank
     private String name;
+    /**
+     * Пароль
+     */
     @NotBlank
     private String password;
 
