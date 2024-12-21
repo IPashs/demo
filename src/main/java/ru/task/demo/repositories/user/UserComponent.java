@@ -1,4 +1,4 @@
-package ru.task.demo.repositories;
+package ru.task.demo.repositories.user;
 
 import ru.task.demo.entity.User;
 
