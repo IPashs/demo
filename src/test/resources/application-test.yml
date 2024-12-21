@@ -1,0 +1,9 @@
+spring:
+  liquibase:
+    changeLog: classpath:db/changelog/db.changelog-master-test.xml
+  jpa:
+    showSql: true
+jwt:
+  secret: ${JWT_SECRET:?BFKv?b7PkFEyv%Y~RXgFc@MqQq0xroJ}
+  refreshExpiration: ${REFRESH_EXPIRATION:30m}
+
