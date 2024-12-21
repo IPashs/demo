@@ -32,6 +32,7 @@
         <jsontoken.version>0.11.2</jsontoken.version>
         <jakarvalid.version>3.0.2</jakarvalid.version>
         <lombok.version>1.18.36</lombok.version>
+        <springboot.version>3.4.0</springboot.version>
     </properties>
     <dependencies>
         <dependency>
@@ -134,12 +135,12 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${springboot.version}</version>
                 <configuration>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
                         </exclude>
                     </excludes>
                 </configuration>
