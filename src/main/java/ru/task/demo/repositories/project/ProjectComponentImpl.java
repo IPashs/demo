@@ -5,8 +5,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import ru.task.demo.entity.Project;
+import ru.task.demo.exception.NoSuchElementException;
 
-import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -21,5 +22,11 @@ public class ProjectComponentImpl implements ProjectComponent {
     @Override
     public Page<Project> getAllProjects(final PageRequest pageRequest) {
         return projectRepository.findAll(pageRequest);
+    }
+
+    @Override
+    public Project getProjectWithSectionAndAuthorOrDie(final UUID projectId) {
+        return projectRepository.findById(projectId)
+            .orElseThrow(() -> new NoSuchElementException("Проект не найден"));
     }
 }

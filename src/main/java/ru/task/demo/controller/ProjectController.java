@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.task.demo.service.ProjectService;
 import ru.task.demo.service.dto.SearchPage;
 import ru.task.demo.service.dto.project.CreateProjectRequest;
+
+import java.util.UUID;
 
 /**
  * Контроллер с методами проекта
@@ -38,5 +41,9 @@ public class ProjectController {
         return ResponseEntity.ok(SearchPage.fromPage(projectService.getProjects(pageRequest)));
     }
 
-
+    @GetMapping("/projects/{project_id}")
+    public ResponseEntity<Object> getAllProjects(
+        @PathVariable(value = "project_id") final UUID projectId) {
+        return ResponseEntity.ok(projectService.getProject(projectId));
+    }
 }
