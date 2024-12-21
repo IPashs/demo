@@ -4,7 +4,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +34,7 @@ public class ProjectController {
     @PostMapping("/projects")
     public ResponseEntity<Object> createProject(
         @RequestBody @Valid CreateProjectRequest createProjectRequest) {
-        return ResponseEntity.ok(projectService.createProject(createProjectRequest));
+        return new ResponseEntity<>(projectService.createProject(createProjectRequest), HttpStatus.CREATED);
     }
 
     @GetMapping("/projects")
@@ -53,7 +55,15 @@ public class ProjectController {
     public ResponseEntity<Object> modifyProject(
         @PathVariable(value = "project_id") final UUID projectId,
         @RequestBody @Valid ModifyProjectRequest modifyProjectRequest) {
-        projectService.modifyProject(projectId, modifyProjectRequest);
+        return new ResponseEntity<>(
+            projectService.modifyProject(projectId, modifyProjectRequest),
+            HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/projects/{project_id}")
+    public ResponseEntity<Object> deleteProject(
+        @PathVariable(value = "project_id") final UUID projectId) {
+        projectService.deleteProject(projectId);
         return ResponseEntity.ok().build();
     }
 }

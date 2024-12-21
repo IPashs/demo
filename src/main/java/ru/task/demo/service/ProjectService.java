@@ -41,4 +41,9 @@ public interface ProjectService {
      * @return дто с id и названием проекта
      */
     SimpleIdNameDto modifyProject(UUID projectId, ModifyProjectRequest modifyProjectRequest);
+    /**
+     * Удалить проект (помечается статус deleted)
+     * @param projectId идентификатор проекта
+     */
+    void deleteProject(UUID projectId);
 }

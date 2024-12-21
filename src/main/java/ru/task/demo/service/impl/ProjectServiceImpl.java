@@ -89,4 +89,15 @@ public class ProjectServiceImpl implements ProjectService {
         Project savedProject = projectComponent.save(project);
         return new SimpleIdNameDto(savedProject.getId(), savedProject.getName());
     }
+
+    @Override
+    public void deleteProject(final UUID projectId) {
+        Project project = this.projectComponent.getProjectOrDie(projectId);
+        if (!ProjectStatus.DELETED.equals(project.getStatus())) {
+            project.setUpdatedAt(LocalDateTime.now());
+            project.setEditor(userService.getCurrentUser());
+            project.setStatus(ProjectStatus.DELETED);
+            projectComponent.save(project);
+        }
+    }
 }
