@@ -1,5 +1,6 @@
 package ru.task.demo.service.dto.project;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import ru.task.demo.util.ProjectStatus;
@@ -10,5 +11,9 @@ import ru.task.demo.util.ProjectStatus;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class ModifyProjectRequest extends CreateProjectRequest {
+    /**
+     * Новый статус проекта
+     */
+    @NotBlank
     private ProjectStatus status;
 }
