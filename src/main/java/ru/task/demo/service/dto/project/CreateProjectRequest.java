@@ -1,6 +1,7 @@
 package ru.task.demo.service.dto.project;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,12 +30,12 @@ public class CreateProjectRequest {
     /**
      * Дата начала проекта
      */
-    @NotBlank
+    @NotNull
     private LocalDateTime startDate;
     /**
      * Дата окончания проекта
      */
-    @NotBlank
+    @NotNull
     private LocalDateTime endDate;
     /**
      * Список разделов проекта
