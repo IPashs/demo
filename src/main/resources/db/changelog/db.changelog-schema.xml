@@ -7,6 +7,7 @@
 
     <include file="schema/2024-12-19-create-users-tables.xml" relativeToChangelogFile="true"/>
     <include file="schema/2024-12-19-create-project-tables.xml" relativeToChangelogFile="true"/>
+    <include file="schema/2024-12-26-create-posts-tables.xml" relativeToChangelogFile="true"/>
 
 
 </databaseChangeLog>
