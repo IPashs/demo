@@ -8,6 +8,7 @@ import ru.task.demo.service.PostService;
 import ru.task.demo.service.UserService;
 import ru.task.demo.service.dto.post.GetPostFromJSONPlaceholderResponse;
 import ru.task.demo.service.dto.post.GetPostResponse;
+import ru.task.demo.service.dto.post.SimplePostDto;
 
 import java.util.Optional;
 
@@ -29,8 +30,32 @@ public class PostServiceImpl implements PostService {
             //если в БД нет поста - ищем его у провайдера и сохраняем себе, потом отдаем пользователю
             //если и у провайдера нет поста, пользователь получит ошибку 400
             GetPostFromJSONPlaceholderResponse response = jsonPlaceholderService.getPost(postId);
-            post = savePost(response);
+            post = this.savePost(response);
         }
+        return this.createGetPostResponse(post);
+    }
+
+    @Override
+    public GetPostResponse createPost(final SimplePostDto createPostRequest) {
+        /*
+        Тут мы сталкиваемся с проблемой распределенной транзакции
+        если у провайдера пост успешно создался, а у нас нет, мы должны запустить откатную транзакцию
+        и удалить пост у провайдера, но этого тоже может не произойти да и вообще может произойти что угодно
+        даже с сервером, где запущен процесс. Реализация функционала защиты от такой ситуации не входит в рамки
+        тестового задания, но по-хорошему тут надо сохранять наши операции перед тем как мы их выполним и
+        писать в логи перед тем как сохранить операцию в бд, так создадим себе почву
+        для обработки таких событий и в будущем сможем реализовать гарантию корректного выполнения таких операций
+         */
+        //так же мы никак не проверяем существует ли уже такой пост*
+        GetPostFromJSONPlaceholderResponse createdPost = jsonPlaceholderService.createPost(createPostRequest);
+
+        Optional<Post> postOpt = postComponent.findByApiId(createdPost.getId());
+        Post post = postOpt.orElseGet(() -> this.savePost(createdPost));
+
+        return this.createGetPostResponse(post);
+    }
+
+    private GetPostResponse createGetPostResponse(Post post) {
         return GetPostResponse.builder()
             .postId(post.getId())
             .title(post.getTitle())
