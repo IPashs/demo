@@ -25,4 +25,12 @@
                                  referencedTableName="users" referencedColumnNames="id"/>
     </changeSet>
 
+<!--    автоматически добавит индекс, будет использовано во второй части тестового задания-->
+<!--    <changeSet id="2024-12-26_2-modify_posts_tables" author="iapaschenko">-->
+<!--        <addUniqueConstraint-->
+<!--                tableName="posts"-->
+<!--                columnNames="api_id"-->
+<!--                constraintName="posts_to_api_id_ukey"/>-->
+<!--    </changeSet>-->
+
 </databaseChangeLog>
