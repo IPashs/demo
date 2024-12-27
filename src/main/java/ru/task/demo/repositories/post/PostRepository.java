@@ -13,7 +13,7 @@ import java.util.UUID;
 @Repository
 interface PostRepository extends JpaRepository<Post, UUID> {
     /**
-     * Получить пост по идентификатору провайдера если существует или ошибка
+     * Получить пост по идентификатору провайдера если существует
      *
      * @param apiId идентификатор поста в системе провайдера
      * @return сущность поста

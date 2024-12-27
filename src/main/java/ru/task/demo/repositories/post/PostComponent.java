@@ -14,7 +14,6 @@ public interface PostComponent {
      * @param postId идентификатор поста в системе провайдера
      * @return сущность поста
      */
-    //намеренный поиск по id без индекса, будет исправлено в следующем пункте тестового
     Optional<Post> findByApiId(Long postId);
 
     /**
