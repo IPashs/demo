@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.task.demo.entity.Post;
 import ru.task.demo.repositories.post.PostComponent;
+import ru.task.demo.service.JSONPlaceholderService;
 import ru.task.demo.service.PostService;
 import ru.task.demo.service.UserService;
 import ru.task.demo.service.dto.post.GetPostFromJSONPlaceholderResponse;
@@ -16,7 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
     private final PostComponent postComponent;
-    private final JSONPlaceholderServiceImpl jsonPlaceholderService;
+    private final JSONPlaceholderService jsonPlaceholderService;
     private final UserService userService;
 
     @Override
